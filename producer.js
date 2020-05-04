@@ -19,11 +19,18 @@ const run = async () => {
       ],
     })
   }
+
+  const message = {
+    this: 'that',
+    that: 'this',
+    testing: 'test'
+  }
   setInterval( async() => {
+    var buf = Buffer.from(JSON.stringify(message));
     await producer.send({
       topic: 'test-topic',
       messages: [
-        { value: 'Hello KafkaJS user!' },
+        { value: buf },
       ],
     })
   }, 5000)

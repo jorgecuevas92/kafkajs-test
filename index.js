@@ -1,5 +1,5 @@
 const { Kafka } = require('kafkajs')
-
+const JSONStream = require('JSONStream')
 const kafka = new Kafka({
   clientId: 'my-app',
   brokers: ['127.0.0.1:9094']
@@ -24,11 +24,17 @@ const run = async () => {
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      console.log({
-        partition,
-        offset: message.offset,
-        value: message.value.toString(),
-      })
+      try {
+        const content = JSON.parse(message.value);
+        console.log({
+          partition,
+          offset: message.offset,
+          value: content,
+        })
+
+      } catch (error) {
+        console.log(error)
+      }
     },
   })
 }
