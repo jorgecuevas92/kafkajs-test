@@ -1,5 +1,4 @@
 const { Kafka } = require('kafkajs')
-const JSONStream = require('JSONStream')
 const kafka = new Kafka({
   clientId: 'my-app',
   brokers: ['127.0.0.1:9094']
